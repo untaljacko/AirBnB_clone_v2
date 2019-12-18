@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """This is the console for AirBnB"""
 import cmd
+import shlex
 from models import storage
 from datetime import datetime
 from models.base_model import BaseModel
@@ -42,7 +43,15 @@ class HBNBCommand(cmd.Cmd):
             if not line:
                 raise SyntaxError()
             my_list = line.split(" ")
+            new_dict = {}
             obj = eval("{}()".format(my_list[0]))
+            for i in range(1, len(my_list)):
+                new_list = my_list[i].split("=")
+                argm = new_list[1].replace("'", " ")
+                argm1 = eval(argm.replace("_", " "))
+                new_dict[new_list[0]] = argm1
+            for key, value in new_dict.items():
+                setattr(obj, key, value)
             obj.save()
             print("{}".format(obj.id))
         except SyntaxError:
