@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ New engine storage for Airbnb project """
+import json
 from os import environ
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
@@ -40,13 +41,13 @@ class DBStorage:
             for cl in self.__list_class:
                 all_obj = self.__session.query(cl)
                 for obj in all_obj:
-                    key = ".".join([cls, obj_id])
+                    key = ".".join([cls, obj.id])
                     new_dic.update({key: obj})
         return new_dic
 
     def new(self, obj):
         """ method documentation for new """
-        self.session.add(obj)
+        self.__session.add(obj)
 
     def save(self):
         """ method documentation for save """
