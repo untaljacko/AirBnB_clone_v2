@@ -2,7 +2,7 @@
 """This is the place class"""
 import models
 from os import environ
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Float, Integer
 from sqlalchemy import ForeignKey, Table
 from sqlalchemy.orm import relationship
@@ -10,7 +10,7 @@ from sqlalchemy.orm import relationship
 
 amenity_link = Table("place_amenity", Base.metadata,
                      Column("place_id", String(60), ForeignKey("places.id"),
-                            primary_Key=True, nullable=False),
+                            primary_key=True, nullable=False),
                      Column("amenity_id", String(60), ForeignKey("amenities.id"), 
                             primary_key=True, nullable=False))
 
@@ -66,7 +66,8 @@ class Place(BaseModel):
                 n_list.append(models.storage.all().get("Amenity." + key))
             return n_list
 
-        @amenities.setter(self, obj):
+        @amenities.setter
+        def amenities(self, obj):
             """ doc string pend """
             if (obj.__class__.__name__ == "Amenity"):
                 self.amenity_ids.append(str(obj.id))

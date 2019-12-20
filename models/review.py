@@ -13,5 +13,5 @@ class Review(BaseModel):
     """
     __tablename__ = "reviews"
     text = Column(String(1024), nullable=False)
-    user_id = Colmun(String(60), ForeignKey('places.id'), nullable=False)
+    user_id = Column(String(60), ForeignKey('places.id'), nullable=False)
     place_id = Column(String(60), ForeignKey('places.id'), nullable=False)
