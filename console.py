@@ -43,15 +43,15 @@ class HBNBCommand(cmd.Cmd):
             if not line:
                 raise SyntaxError()
             my_list = line.split(" ")
-            new_dict = {}
-            obj = eval("{}()".format(my_list[0]))
-            for i in range(1, len(my_list)):
-                new_list = my_list[i].split("=")
-                argm = new_list[1].replace("'", " ")
-                argm1 = eval(argm.replace("_", " "))
-                new_dict[new_list[0]] = argm1
-            for key, value in new_dict.items():
-                setattr(obj, key, value)
+            for i, parameter in enumerate(my_list[1:]):
+                alter = parameter.find('"')
+                if alter != -1:
+                    val1 = parameter[alter + 1:-1].replace('"', '\\"')
+                    val1 = val1.replace('_', ' ')
+                    str1 = parameter[:alter + 1] + val1 + '"'
+                    my_list[i + 1] = str1
+
+            obj = eval("{}({})".format(my_list[0], ", ".join(my_list[1:])))
             obj.save()
             print("{}".format(obj.id))
         except SyntaxError:
