@@ -43,8 +43,10 @@ def do_deploy(archive_path):
 
 def deploy():
     """ doc deploy """
-    archive_path = do_pack()
-    if archive_path is None:
+    try:
+        archive_path = do_pack()
+    except:
         return False
+    return do_deploy(archive_path)
 
     return do_deploy(archive_path)
