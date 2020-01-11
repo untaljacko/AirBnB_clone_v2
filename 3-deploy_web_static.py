@@ -46,4 +46,6 @@ def deploy():
     pack_new = do_pack()
     if pack_new is None:
         return False
-    return do_deploy(pack_new)
+    archive_path = pack_new
+    ans = do_deploy(archive_path)
+    return ans
