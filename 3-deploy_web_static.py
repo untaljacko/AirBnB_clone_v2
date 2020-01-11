@@ -46,5 +46,4 @@ def deploy():
     pack_new = do_pack()
     if pack_new is None:
         return False
-    else:
-        return do_deploy(pack_new)
+    return do_deploy(pack_new)
