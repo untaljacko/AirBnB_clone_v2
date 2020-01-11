@@ -12,11 +12,15 @@ env.hosts = ['35.243.184.141', '35.243.142.241']
 
 def do_pack():
     """ doc do_pack """
-    local("mkdir -p versions")
-    new_pack = "versions/web_static_{}.tgz".format(
-        datetime.now().strftime("%Y%m%d%H%M%S"))
-    def_pack = local("tar -cvzf {} web_static".format(new_pack))
-    return def_pack
+    try:
+        if not exists("versions"):
+            local("mkdir -p versions")
+        new_pack = "versions/web_static_{}.tgz".format(
+            datetime.now().strftime("%Y%m%d%H%M%S"))
+        def_pack = local("tar -cvzf {} web_static".format(new_pack))
+        return def_pack
+    except:
+        return None
 
 
 def do_deploy(archive_path):
