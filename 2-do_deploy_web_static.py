@@ -3,8 +3,8 @@
 a Fabric script (based on the file 1-pack_web_static.py) that distributes an
 archive to your web servers, using the function do_deploy """
 from datetime import datetime
-from fabric.api import local, run, put
-import os.path
+from fabric.api import local, run, put, env
+from os.path import exists
 
 
 env.hosts = ['35.243.184.141', '35.243.142.241']
@@ -32,8 +32,7 @@ def do_deploy(archive_path):
             /data/web_static/current".format(pack_file))
         run("mv /data/web_static/releases/{}/web_static/*\
             /data/web_static/current/".format(pack_file))
-        run("rm -rf
-            /data/web_static/releases/{}/web_static/".format(pack_file))
+        run("rm -rf /data/web_static/releases/{}/web_static/".format(pack_file))
         return True
     else:
         return False
