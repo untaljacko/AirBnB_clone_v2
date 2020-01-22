@@ -62,7 +62,8 @@ class DBStorage:
         """ method documentation for reload """
         Base.metadata.create_all(self.__engine)
         current_se = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        self.__session = scoped_session(current_se)()
+        Session = scoped_session(current_se)
+        self.__session = Session()
 
     def close(self):
         """ for close the sqlalchemy session """
